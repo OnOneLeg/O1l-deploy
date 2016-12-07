@@ -1,0 +1,10 @@
+---
+# general vars - everything we might use in context of shelleg
+ononeleg:
+  user: ool
+  group: ool
+  homedir: /home/ool
+  sshdir: /home/ool/.ssh
+  prefix: ool
+  suffix: lan
+  domain: ool.lan

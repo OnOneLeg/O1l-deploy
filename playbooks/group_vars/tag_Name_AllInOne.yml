@@ -1,0 +1,15 @@
+# All in one solution
+ec2_keypair: "OnOneLeg"
+ec2_security_group: [ "sg-b8da4dde" ]
+ec2_instance_type: "t2.medium"
+ec2_image: "ami-21abf052"
+ec2_tag_Name: "AllInOne"
+ec2_tag_Type: "development"
+ec2_tag_Environment: "dev"
+ec2_volume_size: 10
+ec2_region: eu-west-1
+ec2_zone: "{{ ec2_region }}a"
+ec2_subnet_ids: [ "subnet-263eac4d" ]
+ec2_Vendor_Name: "Tikal"
+num_of_instances: 1
+ansible_ssh_user: ubuntu

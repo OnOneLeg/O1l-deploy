@@ -1,0 +1,23 @@
+---
+#- hosts: localhost
+#  pre_tasks:
+#    - include_vars: group_vars/tag_Name_AllInOne.yml
+#  roles:
+#    -  role: provision-ec2
+
+- hosts: AllInOne
+  become: yes
+#  become_user: root
+  pre_tasks:
+    - debug: msg="Instantiate infrustructure on {{ inventory_hostname }}"
+  vars:
+    - nodejs_version: '6.x'
+    - mongodb_pymongo_from_pip: false
+  roles:
+    - role: common
+    - role: vim
+    - role: git
+    - role: node
+    - role: java
+    - role: git
+    - role: mongodb

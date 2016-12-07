@@ -1,0 +1,22 @@
+---
+- name: O1LegFrontend
+  box: 'holms/vagrant-centos7-box'
+  box_url: 'https://github.com/holms/vagrant-centos7-box/releases/download/7.1.1503.001/CentOS-7.1.1503-x86_64-netboot.box'
+  box_version: '2.3.1'
+  ip: 172.16.1.160
+  provider: virtualbox
+  ram: 1024
+  gui: false
+  username: vagrant
+  passowrd: vagrant
+
+- name: O1LegBackend
+  box: 'holms/vagrant-centos7-box'
+  box_url: 'https://github.com/holms/vagrant-centos7-box/releases/download/7.1.1503.001/CentOS-7.1.1503-x86_64-netboot.box'
+  box_version: '2.3.1'
+  ip: 172.16.1.150
+  provider: virtualbox
+  ram: 1024
+  gui: false
+  username: vagrant
+  passowrd: vagrant

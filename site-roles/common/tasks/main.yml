@@ -1,0 +1,66 @@
+---
+# tasks file for md-common
+
+- name: "Set instance hostname"
+  hostname:
+    name: "{{ inventory_hostname }}"
+
+- name: "Build hosts file (backups will be made)"
+  lineinfile:
+    dest: /etc/hosts
+    line: '127.0.0.1       {{ ansible_hostname }}.{{ ononeleg.domain }}  {{ ansible_hostname }}'
+    insertafter: "^127.0.0.1"
+    state: present
+    backup: yes
+  when: ononeleg.domain is defined
+
+- name: "Install goodies ..."
+  package: name="{{ item }}" state=latest
+  with_items:
+  - git
+
+- name: "Add ononeleg group"
+  group:
+    name="{{ ononeleg.group }}"
+#  become: yes # no need to specify on task level ... - see main.yml
+
+- name: "Add ononeleg user"
+  user:
+    name="{{ ononeleg.user }}"
+    group="{{ ononeleg.group }}"
+    home="{{ ononeleg.homedir }}"
+
+- name: "Create ononeleg directories"
+  file:
+    dest: "{{ item }}"
+    recurse: yes
+    state: directory
+    mode: 0700
+    owner: "{{ ononeleg.user }}"
+    group: "{{ ononeleg.group }}"
+  with_items:
+    - "{{ ononeleg.homedir }}/.ssh"
+
+#- file:
+#    path: "{{ ononeleg.homedir }}/.ssh/authorized_keys"
+#    state: touch
+#    mode: "u=rw"
+#    owner: "{{ ononeleg.user }}"
+#    group: "{{ ononeleg.group }}"
+#
+#- name: "Set up authorized_keys for ononeleg user"
+#  authorized_key:
+#    user: "{{ ononeleg.user }}"
+#    key: "{{ item }}"
+#  with_items:
+#    - "{{ ononeleg.ci_sshkey }}"
+#  tags:
+#  - injectpubkeys
+
+- name: "Configure ononeleg as sudoer"
+  template:
+    src: ononeleg.j2
+    dest: /etc/sudoers.d/ononeleg
+    mode: 0644
+    owner: root
+    group: root
